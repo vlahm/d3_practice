@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<!-- should change these tabs to width 2 -->
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8"> <!--need this to ensure that browsers can parse d3 properly-->
+        <title>D3 Page Template</title>
+        <!--<script type="text/javascript" src="d3/d3.js"></script> <!- -sources the d3 library- ->
+        <script type="text/javascript" src="d3-selection-multi/d3-selection-multi.js"></script> <!- -allows multivalue mapping (attrs)- ->-->
+        <script src="https://d3js.org/d3.v4.min.js"></script> <!--load from the web-->
+        <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+        <!--6 <style type='text/css'>
+            div.bar { /* define the style of the bars in the chart (note that it's not cool to use divs themselves to make visuals. this is just for a simple example*/
+                display: inline-block;
+                width: 20px;
+                height: 75px;   /* this gets overridden later */
+                background-color: teal;
+                margin-right: 2px; /* puts some space after each div (bar) */
+            }
+        </style> -->
+    </head>
+    <body>
+        <script type="text/javascript">
+            //1 d3.select("body").append("p").text("New paragraph!");
+            var dataset = [ 5, 10, 15, 20, 25 ];
+            
+            //1-6 d3.select("body")
+            //     .selectAll("p")
+            //     .data(dataset)
+            //     .enter()
+                //2-5 .append("p")
+                //2 .text("New paragraph!"); //print this string once for each data element in the array
+                //3 .text(function(d) { return d; }) //print the data themselves
+                //4 .style("color", "red");
+                //5 .style("color", function(d) { //dynamic text color
+                //    if (d > 15) {   //Threshold of 15
+                //        return "red";
+                //    } else {
+                //        return "black";
+                //    }
+                //});
+                //6 .append('div')
+                // .attr('class', 'bar')
+                // .style("height", function(d) {
+                //     var barHeight = d * 5;  //Scale up by factor of 5 
+                //     return barHeight + "px";
+                // });
+
+            var w = 500;
+            var h = 50;
+            var svg = d3.select('body').append('svg'); //dont need to store this in a variable, but now we dont have to d3.select('svg') later
+            svg.attr('width', w) //these could also be chained onto the call above
+                .attr('height', h);
+            var circles = svg.selectAll("circle")
+                .data(dataset)
+                .enter()
+                .append("circle");
+             circles.attr('cx', function(d, i) { //d contains the current data value; i contains the index of the current data value; both populated automatically by D3
+                return (i * 50) + 25;
+            })
+            .attr('cy', h/2)
+            .attr('r', function(d) {
+                return d;
+            })
+            .attr("fill", "yellow")
+            .attr("stroke", "orange")
+            .attr("stroke-width", function(d) {
+                return d/2;
+            });
+
+           // multi value mapping is not working! svg.selectAll('circle')
+           //     .data(dataset)
+           //     .enter()
+           //     .append('circle')
+           //     .attrs({ //this should allow multivalue mapping assuming the package is loaded properly
+           //         cx: function(d, i) { return (i * 50) + 25; },
+           //         cy: h/2,
+           //         r: function(d) { return d; },
+           //         fill: 'yellow',
+           //         stroke: 'orange',
+           //         stroke-width: function(d) { return d/2; }
+           //     });
+        </script>
+    </body>
+</html>
